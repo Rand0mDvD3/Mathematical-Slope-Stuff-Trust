@@ -1,54 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slope</title>
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="TemplateData/unityloader41.js"></script>
     <script>
         var gameInstance = UnityLoader.instantiate("gameContainer", "Build/slope.json", { onProgress: UnityProgress, Module: { onRuntimeInitialized: function() { UnityProgress(gameInstance, "complete") } } });
-
-        let cheatActivated = false;
-        let cheatCodeEntered = '';
-
-        document.addEventListener('keydown', function(event) {
-            const allowedKeys = ['w', 'a', 's', 'd', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'q', 'e'];
-            const keyCodeZ = 90; // Key code for 'Z'
-            const keyCodeEnter = 13; // Key code for 'Enter'
-
-            if (!allowedKeys.includes(event.key.toLowerCase())) {
-                // If the pressed key is not in the allowed keys list, reset cheat code entry
-                cheatActivated = false;
-                cheatCodeEntered = '';
-            }
-
-            if (!cheatActivated && event.key.toLowerCase() === 'c') {
-                // Start checking for the cheat code if 'c' is pressed
-                cheatActivated = true;
-            } else if (cheatActivated && cheatCodeEntered.length < 4) {
-                // Continue entering the cheat code
-                cheatCodeEntered += event.key.toLowerCase();
-                if (cheatCodeEntered === 'chea') {
-                    // Cheat code entered successfully
-                    cheatCodeEntered = ''; // Reset cheat code entry
-                    console.log('Cheat activated!');
-                    // Add your cheat functionality here
-                }
-            }
-        });
-
-        document.addEventListener('keyup', function(event) {
-            if (event.keyCode === 90) { // Key code for 'Z'
-                // Stop spamming Enter when 'Z' is released
-                clearInterval(spamInterval);
-            }
-        });
     </script>
     <style>
         .alert {
-          padding: 20px;
+          padding: 5px;
           background-color: #9b34eb;
           color: white;
         }
@@ -71,6 +30,7 @@
     </style>
 </head>
 
+
 <body style="margin: 0; overflow: hidden;">
     <div class="webgl-content">
         <div id="gameContainer" style="width: 100%; height: 100%; margin: 0;"></div>
@@ -79,5 +39,3 @@
     <script async src="//static.getclicky.com/101393847.js"></script>
     <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101393847ns.gif" /></p></noscript>
 </body>
-<!-- Slope game by y8 games, not me.-->
-</html>
