@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Enter Presser</title>
+    <script>
+        let spamInterval;
+
+        document.addEventListener('keydown', function(event) {
+            const keyCodeZ = 90; // Key code for 'Z'
+            const keyCodeEnter = 13; // Key code for 'Enter'
+
+            if (event.keyCode === keyCodeZ) {
+                // 'Z' key pressed, start spamming Enter key
+                spamInterval = setInterval(function() {
+                    const enterEvent = new KeyboardEvent('keydown', {'keyCode': keyCodeEnter});
+                    document.dispatchEvent(enterEvent);
+                }, 25);
+            }
+        });
+
+        document.addEventListener('keyup', function(event) {
+            const keyCodeZ = 90; // Key code for 'Z'
+
+            if (event.keyCode === keyCodeZ) {
+                // Stop spamming Enter when 'Z' is released
+                clearInterval(spamInterval);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Press 'Z' to spam Enter key</h1>
+    <!-- Your game content or other HTML elements can be placed here -->
+</body>
+</html>
