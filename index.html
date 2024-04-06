@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Game</title>
+    <title>Slope</title>
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="TemplateData/unityloader41.js"></script>
@@ -11,30 +11,31 @@
         var gameInstance = UnityLoader.instantiate("gameContainer", "Build/slope.json", { onProgress: UnityProgress, Module: { onRuntimeInitialized: function() { UnityProgress(gameInstance, "complete") } } });
 
         let cheatActivated = false;
-        let spamInterval;
+        let cheatCodeEntered = '';
 
         document.addEventListener('keydown', function(event) {
-            const cheatCode = 'cheat';
+            const allowedKeys = ['w', 'a', 's', 'd', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'q', 'e'];
             const keyCodeZ = 90; // Key code for 'Z'
             const keyCodeEnter = 13; // Key code for 'Enter'
 
-            if (event.key === cheatCode[0] && !cheatActivated) {
-                // Start checking for the cheat code
+            if (!allowedKeys.includes(event.key.toLowerCase())) {
+                // If the pressed key is not in the allowed keys list, reset cheat code entry
+                cheatActivated = false;
+                cheatCodeEntered = '';
+            }
+
+            if (!cheatActivated && event.key.toLowerCase() === 'c') {
+                // Start checking for the cheat code if 'c' is pressed
                 cheatActivated = true;
-                setTimeout(function() {
-                    cheatActivated = false;
-                }, 2000); // Reset cheat mode after 2 seconds if not fully entered
-            } else if (event.key === cheatCode[1] && cheatActivated && event.keyCode === keyCodeZ) {
-                // 'Z' key pressed while cheat mode is activated
-                spamInterval = setInterval(function() {
-                    // Simulate pressing 'Enter' key every 25 milliseconds
-                    if (event.repeat) {
-                        // Prevent multiple 'Enter' keypresses when holding 'Z'
-                        return;
-                    }
-                    const enterEvent = new KeyboardEvent('keydown', {'keyCode': keyCodeEnter});
-                    document.dispatchEvent(enterEvent);
-                }, 25);
+            } else if (cheatActivated && cheatCodeEntered.length < 4) {
+                // Continue entering the cheat code
+                cheatCodeEntered += event.key.toLowerCase();
+                if (cheatCodeEntered === 'chea') {
+                    // Cheat code entered successfully
+                    cheatCodeEntered = ''; // Reset cheat code entry
+                    console.log('Cheat activated!');
+                    // Add your cheat functionality here
+                }
             }
         });
 
